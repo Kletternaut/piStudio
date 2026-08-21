@@ -1,6 +1,10 @@
 # Contributing to piStudio
 
-Thank you for your interest in contributing! Contributions of all kinds are welcome — bug reports, feature requests, documentation improvements, and code changes.
+Thank you for your interest in contributing!
+
+piStudio is a solo-maintained project. **Bug reports, feature requests, and documentation suggestions are very welcome** — they help shape the project.
+
+**Code contributions (pull requests) are currently not accepted.** piStudio is licensed under the PolyForm Noncommercial License 1.0.0, and the project must remain the sole copyright holder of its entire codebase in order to be able to offer commercial licenses in the future. Accepting external code would require a contributor license agreement, which is not part of the current workflow.
 
 ---
 
@@ -113,21 +117,27 @@ pre-commit run --all-files
 
 ---
 
-## Pull request checklist
+## Reporting issues
 
-Before opening a pull request, make sure:
+Before opening an issue, please make sure:
 
-- [ ] Code compiles without errors or warnings (`make -j4`)
-- [ ] All modified files are formatted (`clang-format` or `pre-commit`)
-- [ ] No new clang-tidy warnings introduced
-- [ ] Commit messages are in English and follow the format:
-  ```
-  [TYPE] Short description (50 chars max)
-  ```
-  Types: `FEATURE`, `FIX`, `REFACTOR`, `DOCS`, `VERSION`
+- [ ] The issue has not already been reported
+- [ ] The piStudio version is included (Help → About)
+- [ ] The expected and the actual behavior are described
+- [ ] Relevant logs are attached, if available
+
+Commit message conventions for reference (used by the maintainer):
+
+```
+[TYPE] Short description (50 chars max)
+```
+
+Types: `FEATURE`, `FIX`, `REFACTOR`, `DOCS`, `VERSION`
 
 ---
 
 ## License
 
-By contributing to this project, you agree that your contributions will be licensed under the **PolyForm Noncommercial License 1.0.0**, the same license as the project.
+piStudio is licensed under the **PolyForm Noncommercial License 1.0.0** — noncommercial use is permitted free of charge; commercial use requires a separate license from the copyright holder.
+
+Pull requests are not accepted (see above), so no contribution licensing terms are required. Suggestions and bug reports are provided without any transfer of rights.
