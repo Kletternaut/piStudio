@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Dokumentation
+    url: https://github.com/Kletternaut/piStudio/tree/main/resources/docs
+    about: Lies die Dokumentation, bevor du ein Issue erstellst.
+  - name: Discussions
+    url: https://github.com/Kletternaut/piStudio/discussions
+    about: Für Fragen und allgemeinen Austausch nutze bitte die Discussions.

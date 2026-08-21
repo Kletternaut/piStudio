@@ -1,0 +1,39 @@
+.copilot/
+.history/
+.vscode/
+build/
+.venv/
+
+.github/copilot-instructions.md
+DEVELOPMENT/
+BACKUP/
+TESTS/
+
+# Runtime/output data
+content_output/
+detection_output/
+output/
+gstshark_*/
+
+# Config (user-specific)
+config/
+
+# Camera tracking mapping (runtime data)
+camera_tracking_mapping.json
+tuning-file/
+
+# temp files
+*.tmp
+*.temp
+*.cache
+*.swp
+temp/
+tmp/
+
+
+# Backup files
+*.backup
+
+# Qt generated
+*.autosave
+*.log

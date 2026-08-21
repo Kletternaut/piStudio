@@ -1,0 +1,52 @@
+name: Update Version Badge
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  update-badge:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+
+      - name: Update badge in README
+        run: |
+          # shields.io static badges: dashes in the message must be escaped
+          # as '--' (e.g. "0.5.8-beta" -> "0.5.8--beta").
+          BADGE_VERSION="${{ steps.version.outputs.VERSION }}"
+          BADGE_VERSION="${BADGE_VERSION//-/--}"
+          sed -i "s|/badge/version-[^)]*-blue\.svg|/badge/version-${BADGE_VERSION}-blue.svg|g" .github/README.md
+          sed -i "s|/badge/version-[^)]*-blue\.svg|/badge/version-${BADGE_VERSION}-blue.svg|g" .github/README_DE.md
+
+      - name: Update version in INSTALLATION.md and README.md
+        run: |
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          # Update release tag in download URL (e.g. /releases/download/v0.4.33/ -> /releases/download/vX.Y.Z/)
+          # Tag may contain a beta suffix (v0.5.8-beta), so match any non-slash segment.
+          sed -i "s|/releases/download/v[^/]*/|/releases/download/v${VERSION}/|g" resources/docs/INSTALLATION.md
+          sed -i "s|/releases/download/v[^/]*/|/releases/download/v${VERSION}/|g" .github/README.md
+          sed -i "s|/releases/download/v[^/]*/|/releases/download/v${VERSION}/|g" .github/README_DE.md
+          # Update .deb filename (e.g. piStudio_0.6.0-beta_arm64.deb -> piStudio_X.Y.Z[-beta]_arm64.deb)
+          sed -i "s|piStudio_[^/ ]*_arm64\.deb|piStudio_${VERSION}_arm64.deb|g" resources/docs/INSTALLATION.md
+          sed -i "s|piStudio_[^/ ]*_arm64\.deb|piStudio_${VERSION}_arm64.deb|g" .github/README.md
+          sed -i "s|piStudio_[^/ ]*_arm64\.deb|piStudio_${VERSION}_arm64.deb|g" .github/README_DE.md
+
+      - name: Commit updated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .github/README.md .github/README_DE.md resources/docs/INSTALLATION.md
+          git diff --staged --quiet || git commit -m "CI: update version to ${{ steps.version.outputs.VERSION }}"
+          git push origin main

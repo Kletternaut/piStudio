@@ -1,0 +1,49 @@
+# clang-format configuration for piStudio
+# C++17, 4-space indent, Stroustrup brace style (function braces on new line,
+# control-flow braces on same line)
+
+BasedOnStyle: LLVM
+Language: Cpp
+Standard: c++17
+
+# Indentation
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ContinuationIndentWidth: 4
+
+# Braces: Stroustrup = Allman for functions/classes, Attach for control flow
+BreakBeforeBraces: Stroustrup
+
+# Line length
+ColumnLimit: 120
+
+# Pointer alignment: "auto *ptr" style
+PointerAlignment: Left
+
+# Spaces
+SpaceBeforeParens: ControlStatements
+SpaceAfterCStyleCast: false
+SpacesInAngles: Never
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+
+# Include sorting
+SortIncludes: CaseInsensitive
+IncludeBlocks: Regroup
+
+# Constructor initializer lists
+ConstructorInitializerIndentWidth: 4
+BreakConstructorInitializers: BeforeColon
+
+# Allow short functions/if on one line
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortLoopsOnASingleLine: false
+
+# Trailing commas and comments
+InsertTrailingCommas: None
+ReflowComments: true
+
+# Qt-specific: do not break Q_OBJECT macro line
+AttributeMacros: ['Q_OBJECT', 'Q_SLOTS', 'Q_SIGNALS', 'Q_PROPERTY', 'Q_DECLARE_METATYPE']

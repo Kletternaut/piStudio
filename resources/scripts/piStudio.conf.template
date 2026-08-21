@@ -1,0 +1,13 @@
+[General]
+CustomApp1=rpicam-focus
+CustomApp2=
+CustomApp3=
+CustomApp4=
+CustomApp5=
+splashScreenEnabled=true
+
+[Paths]
+ConfigFilePath=
+GuiOutputPath=
+GuiPostProcessPath=
+GuiRpicamConfigPath=

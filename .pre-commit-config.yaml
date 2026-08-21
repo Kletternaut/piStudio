@@ -1,0 +1,25 @@
+# pre-commit configuration for piStudio
+# Install: pip install pre-commit && pre-commit install
+# Run manually: pre-commit run --all-files
+
+repos:
+  # General file hygiene
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+        types_or: [c++, c]
+      - id: end-of-file-fixer
+        types_or: [c++, c]
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: check-added-large-files
+        args: ['--maxkb=500']
+      - id: mixed-line-ending
+        args: ['--fix=lf']
+
+  # clang-format: disabled - causes large diffs on existing code base
+  # Run manually: clang-format -i -style=file src/gui/MainWindow.cpp
+
+  # clang-tidy: disabled as pre-commit hook (Qt headers not found without full build env)
+  # Run manually: clang-tidy -p build src/gui/MainWindow.cpp

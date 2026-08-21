@@ -1,0 +1,45 @@
+QMap<QString, QCheckBox*> infoTextCheckboxMap;
+
+QHBoxLayout *rowLayout = new QHBoxLayout;
+
+// Left column: info-text checkboxes
+QVBoxLayout *infoTextCheckboxLayout = new QVBoxLayout;
+struct InfoTextOption {
+    const char* label;
+    const char* placeholder;
+    const char* tooltip;
+};
+InfoTextOption infoTextOptions[] = {
+    {"Frame", "%frame", "Frame number"},
+    {"FPS", "%fps", "Framerate"},
+    {"Exp", "%exp", "Shutter speed"},
+    {"AG", "%ag", "Analogue gain"},
+    {"DG", "%dg", "Digital gain"},
+    {"RG", "%rg", "Red colour gain"},
+    {"BG", "%bg", "Blue colour gain"},
+    {"Focus", "%focus", "Focus FoM value"},
+    {"AE-Lock", "%aelock", "AE locked status"},
+    {"LensPos", "%lp", "Lens position (if known)"},
+    {"AF-Status", "%afstate", "AF state (if supported)"}
+};
+for (const auto& opt : infoTextOptions) {
+    QCheckBox *cb = new QCheckBox(opt.label, this);
+    cb->setToolTip(opt.tooltip);
+    infoTextCheckboxLayout->addWidget(cb);
+    infoTextCheckboxMap[opt.placeholder] = cb;
+}
+rowLayout->addLayout(infoTextCheckboxLayout);
+
+// Right column: your parameter labels
+QVBoxLayout *paramLabelLayout = new QVBoxLayout;
+paramLabelLayout->addWidget(new QLabel("Code", this));
+paramLabelLayout->addWidget(new QLabel("AWB", this));
+paramLabelLayout->addWidget(new QLabel("Sharpness", this));
+paramLabelLayout->addWidget(new QLabel("EV", this));
+paramLabelLayout->addWidget(new QLabel("Gain", this));
+paramLabelLayout->addWidget(new QLabel("Brightness", this));
+paramLabelLayout->addWidget(new QLabel("Contrast", this));
+paramLabelLayout->addWidget(new QLabel("Saturation", this));
+rowLayout->addLayout(paramLabelLayout);
+
+mainLayout->addLayout(rowLayout);

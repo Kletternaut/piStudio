@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="piStudio.svg">../resources/images/piStudio.svg</file>
+        <file alias="piStudio_text.svg">../resources/images/piStudio_text.svg</file>
+        <file alias="piStudio_splash_wtext.png">../resources/images/piStudio_splash_wtext.png</file>
+        <file alias="Kletternaut_logo874x530_alpha.png">../resources/images/Kletternaut_logo874x530_alpha.png</file>
+        <file alias="paypal_donate_qr.png">../resources/images/paypal_donate_qr.png</file>
+    </qresource>
+</RCC>

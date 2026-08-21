@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=@APP_NAME@
+Comment=Graphical parameter configurator for rpicam-apps
+Comment[de]=Grafischer Parameter-Konfigurator für rpicam-apps
+Exec=@APP_BINARY@
+Icon=@APP_BINARY@
+Terminal=false
+Categories=AudioVideo;Photography;
+StartupNotify=true
+MimeType=image/jpeg;image/png;video/mp4;video/h264;
+Keywords=camera;raspberry;pi;photography;video;

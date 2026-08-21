@@ -1,0 +1,99 @@
+#!/bin/bash
+
+# ffconvert - Convert MJPEG to H.264/MP4
+# Usage: 
+#   ffconvert                      - Convert all .mjpeg files in current directory
+#   ffconvert input.mjpeg          - Convert single file
+#   ffconvert input.mjpeg output.mp4 - Convert with custom output name
+
+# Function to convert a single file
+convert_file() {
+    local INPUT="$1"
+    local OUTPUT="$2"
+    
+    if [ ! -f "$INPUT" ]; then
+        echo "Error: Input file '$INPUT' not found!"
+        return 1
+    fi
+    
+    echo "Converting: $INPUT -> $OUTPUT"
+    
+    # Start timer
+    local start_time=$(date +%s)
+    
+    ffmpeg -y -i "$INPUT" -c:v libx264 -crf 23 -preset medium -c:a copy "$OUTPUT" 2>&1 | grep -v "frame=" > /dev/null
+    
+    # Calculate duration
+    local end_time=$(date +%s)
+    local duration=$((end_time - start_time))
+    
+    if [ $? -eq 0 ]; then
+        # Copy timestamp from input to output
+        touch -r "$INPUT" "$OUTPUT"
+        echo "✓ Success: $(du -h "$INPUT" | cut -f1) -> $(du -h "$OUTPUT" | cut -f1) in ${duration}s"
+        return 0
+    else
+        echo "✗ Failed: $INPUT (after ${duration}s)"
+        return 1
+    fi
+}
+
+# No arguments: Convert all .mjpeg files in current directory
+if [ $# -eq 0 ]; then
+    echo "=== Batch Convert: All .mjpeg files in current directory ==="
+    
+    # Find all .mjpeg files
+    shopt -s nullglob
+    mjpeg_files=(*.mjpeg)
+    
+    if [ ${#mjpeg_files[@]} -eq 0 ]; then
+        echo "No .mjpeg files found in current directory"
+        exit 0
+    fi
+    
+    total=0
+    converted=0
+    skipped=0
+    
+    for INPUT in "${mjpeg_files[@]}"; do
+        OUTPUT="${INPUT%.mjpeg}.mp4"
+        
+        # Skip if .mp4 already exists
+        if [ -f "$OUTPUT" ]; then
+            echo "⊘ Skipping: $INPUT (output already exists)"
+            ((skipped++))
+            continue
+        fi
+        
+        ((total++))
+        if convert_file "$INPUT" "$OUTPUT"; then
+            ((converted++))
+        fi
+    done
+    
+    echo ""
+    echo "=== Summary ==="
+    echo "Total files: ${#mjpeg_files[@]}"
+    echo "Converted: $converted"
+    echo "Skipped: $skipped"
+    echo "Failed: $((total - converted))"
+    
+    exit 0
+fi
+
+# Single file conversion
+if [ $# -eq 1 ]; then
+    INPUT="$1"
+    OUTPUT="${INPUT%.*}.mp4"
+elif [ $# -eq 2 ]; then
+    INPUT="$1"
+    OUTPUT="$2"
+else
+    echo "Usage: ffconvert [input.mjpeg] [output.mp4]"
+    echo "       ffconvert              - Convert all .mjpeg files"
+    echo "       ffconvert input.mjpeg  - Convert single file"
+    exit 1
+fi
+
+convert_file "$INPUT" "$OUTPUT"
+exit $?
